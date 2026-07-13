@@ -1,4 +1,4 @@
-import request
+import requests
 import os
 
 # API de la aplicacion
@@ -6,11 +6,11 @@ API_KEY = '123' # key gratuita publica, sin registro
 BASE_URL = f"https://www.thesportsdb.com/api/v1/json/{API_KEY}"
 
 # Identificacion de la liga uruguaya
-ID_LIGA_URUGUAYA = ## Completar
+ID_LIGA_URUGUAYA = None## Completar
 
 def _get(endpoint, params=None):
     url = f"{BASE_URL}/{endpoint}"
-    response = request.get(url, params=params)
+    response = requests.get(url, params=params)
     response.raise_for_status()
     return response.json()
 
