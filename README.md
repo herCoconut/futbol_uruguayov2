@@ -3,6 +3,8 @@ Analisis del futbol uruguayo con la API de TheSportsDB.
 
 ## Archvios creados
 - ```api.py```: Archivo en el cual se accede a la api. 
+- ```buscar_id.py```: Es utilizado para identificar la liga.
+- ```equipos_liga.py```: Devuelve Invalid name passed.
 
 
 ### Archivo ```api.py```
