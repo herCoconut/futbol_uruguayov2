@@ -20,8 +20,8 @@ def buscar_liga_uruguaya():
 def get_equipos_liga(name_liga="Uruguayan Primera Division"):
     return _get("search_all_leagues.php", {"l": name_liga})
 
-def get_temporadas(id_liga=ID_LIGA_URUGUAYA):
-    return _get("search_all_season.php", {"id": id_liga})
+def get_temporadas(id_liga=ID_LIGA_URUGUAYA):       # Devuelve unicamente las temporadas 2019, 2020, 2021, 2022 y 2023
+    return _get("search_all_seasons.php", {"id": id_liga})
 
 def get_partidos_temporada(id_liga=ID_LIGA_URUGUAYA, temporada="2025-2026"):
     return _get("eventsseason.php", {"id": id_liga, "s": temporada})
