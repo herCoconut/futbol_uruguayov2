@@ -17,8 +17,8 @@ def _get(endpoint, params=None):
 def buscar_liga_uruguaya():
     return _get("search_all_leagues.php", {"c": "Uruguay", "s": "Soccer"})
 
-def get_equipos_liga(nombre_liga="Uruguay Primera Division"):
-    return _get("search_all_leagues.php", {"1": nombre_liga})
+def get_equipos_liga(name_liga="Uruguayan Primera Division"):
+    return _get("search_all_leagues.php", {"l": name_liga})
 
 def get_temporadas(id_liga=ID_LIGA_URUGUAYA):
     return _get("search_all_season.php", {"id": id_liga})
