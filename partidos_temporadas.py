@@ -12,9 +12,18 @@ data = get_partidos_temporada(temporada="2023")
 # print(f"Elementos de data: {data.keys()}")
 
 # Se imprime informacion sobre data['events'], que es una lista de largo 15
-print(f"Tipo de dato de data['events']: {type(data['events'])}")
-print(f"Cantidad de elementos en data['events']: {len(data['events'])}")
+# print(f"Tipo de dato de data['events']: {type(data['events'])}")
+# print(f"Cantidad de elementos en data['events']: {len(data['events'])}")
 
-print(f"Primer elemento de data['events']: {data['events'][0]}")
-print(f"Largo de data['events'][0]: {len(data['events'][0])}")
-print(f"Keys de data['events'][0]: {data['events'][0].keys()}")
+# Se imprimen informacion sobre el primer elemento de data['events'], que es un
+# diccionario de largo 30 que contine un partido de la temporada 2023.
+# print(f"\033[105m Primer elemento de data['events']:\033[0m {data['events'][0]}")
+# print(f"Largo de data['events'][0]: {len(data['events'][0])}")
+# print(f"Keys de data['events'][0]: {data['events'][0].keys()}")
+
+# Se crea el dataframe a partir de data
+partidos = pd.json_normalize(data['events'])
+
+print(f"Cabezal del dataframe{partidos.head(10)}")
+print(f"Info del dataframe{partidos.info()}")
+print(f"Columnas del dataframe{partidos.columns}")
