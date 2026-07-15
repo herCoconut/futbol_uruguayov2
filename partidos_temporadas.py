@@ -33,3 +33,44 @@ partidos_filter = partidos[['idEvent', 'intRound', 'dateEvent', 'strTime', 'strH
 
 # Muestra informacion filtra (informacion relevante) sobre los partidos que se tiene de la temporada 2023.
 print(f"\033[105m Cabezal del dataframe filtrado:\033[0m\n{partidos_filter.head(15)}")
+print(f"\033[104m Tipo de Dato de equipos:\033[0m {type(partidos_filter)}")
+
+
+# Se crea una copia de partidos_filter
+partidos_filter = partidos_filter.copy()
+
+# Se crea una nueva columna 'puntos_local', donde el valor esta asignado dependiendo del resultado del partido.
+partidos_filter['puntos_local'] = np.select(
+    [
+        partidos_filter['intHomeScore'] > partidos_filter['intAwayScore'],
+        partidos_filter['intHomeScore'] < partidos_filter['intAwayScore'],
+    ],
+    [3, 0],
+    default=1,
+)
+
+# Se crea una nueva columna 'puntos_local', donde el valor esta asignado dependiendo del resultado del partido.
+partidos_filter['puntos_visitante'] = np.select(
+    [
+        partidos_filter['intHomeScore'] < partidos_filter['intAwayScore'],
+        partidos_filter['intHomeScore'] > partidos_filter['intAwayScore'],
+    ],
+    [3, 0],
+    default=1,
+)
+
+# Se concatenan los resultados, se agrupan segun equipos y se suman los puntos
+tabla_posiciones = (
+    pd.concat(
+        [
+            partidos_filter[['strHomeTeam', 'puntos_local']].rename(columns={'strHomeTeam': 'Equipo', 'puntos_local': 'Puntos'}),
+            partidos_filter[['strAwayTeam', 'puntos_visitante']].rename(columns={'strAwayTeam': 'Equipo', 'puntos_visitante': 'Puntos'}),
+        ]
+    )
+    .groupby('Equipo', as_index=False)['Puntos']
+    .sum()
+    .sort_values('Puntos', ascending=False)
+)
+
+print(f"\033[105m Tabla de posiciones:\033[0m\n{tabla_posiciones}")
+print(f"\033[104m Tipo de Dato de tabla_posiciones:\033[0m {type(tabla_posiciones)}")
