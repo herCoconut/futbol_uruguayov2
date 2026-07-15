@@ -111,5 +111,11 @@ colores_barras = [colores_equipos[label] for label in tabla_posiciones['Equipo']
 # Grafica
 plt.figure(figsize=(18,10))
 plt.bar(tabla_posiciones['Equipo'], tabla_posiciones['Puntos'], color=colores_barras, label=f"{tabla_posiciones['Equipo']} - {tabla_posiciones['PJ']}PJ")
+plt.title("Posiciones Campeonato Uruguayo 2023 en la fecha 2")
+plt.xlabel("Equipos")
+plt.ylabel("Puntos")
+plt.xticks(rotation=45)
 plt.legend()
+plt.grid()
+plt.tight_layout()
 plt.savefig("Imagenes/Posiciones.jpg")
