@@ -110,11 +110,13 @@ colores_barras = [colores_equipos[label] for label in tabla_posiciones['Equipo']
 
 # Grafica
 plt.figure(figsize=(18,10))
-plt.bar(tabla_posiciones['Equipo'], tabla_posiciones['Puntos'], color=colores_barras, label=f"{tabla_posiciones['Equipo']} - {tabla_posiciones['PJ']}PJ")
+plt.bar(tabla_posiciones['Equipo'], tabla_posiciones['Puntos'], color=colores_barras)
 plt.title("Posiciones Campeonato Uruguayo 2023 en la fecha 2")
 plt.xlabel("Equipos")
 plt.ylabel("Puntos")
 plt.xticks(rotation=45)
+for i, v in enumerate(tabla_posiciones["Puntos"]):
+    plt.text(i, v + 0.5, str(v), ha='center', va='bottom')
 plt.legend()
 plt.grid()
 plt.tight_layout()
