@@ -32,8 +32,8 @@ partidos = pd.json_normalize(data['events'])
 partidos_filter = partidos[['idEvent', 'intRound', 'dateEvent', 'strTime', 'strHomeTeam', 'strAwayTeam', 'intHomeScore', 'intAwayScore']]
 
 # Muestra informacion filtra (informacion relevante) sobre los partidos que se tiene de la temporada 2023.
-print(f"\033[105m Cabezal del dataframe filtrado:\033[0m\n{partidos_filter.head(15)}")
-print(f"\033[104m Tipo de Dato de equipos:\033[0m {type(partidos_filter)}")
+# print(f"\033[105m Cabezal del dataframe filtrado:\033[0m\n{partidos_filter.head(15)}")
+# print(f"\033[104m Tipo de Dato de equipos:\033[0m {type(partidos_filter)}")
 
 
 # Se crea una copia de partidos_filter
@@ -59,18 +59,57 @@ partidos_filter['puntos_visitante'] = np.select(
     default=1,
 )
 
-# Se concatenan los resultados, se agrupan segun equipos y se suman los puntos
+# Se concatenan los resultados, se agrupan según equipos y se calculan puntos y partidos jugados.
+partidos = pd.concat(
+    [
+        partidos_filter[['strHomeTeam', 'puntos_local']].rename(columns={'strHomeTeam': 'Equipo', 'puntos_local': 'Puntos'}),
+        partidos_filter[['strAwayTeam', 'puntos_visitante']].rename(columns={'strAwayTeam': 'Equipo', 'puntos_visitante': 'Puntos'}),
+    ],
+    ignore_index=True,
+)
+
+
 tabla_posiciones = (
-    pd.concat(
-        [
-            partidos_filter[['strHomeTeam', 'puntos_local']].rename(columns={'strHomeTeam': 'Equipo', 'puntos_local': 'Puntos'}),
-            partidos_filter[['strAwayTeam', 'puntos_visitante']].rename(columns={'strAwayTeam': 'Equipo', 'puntos_visitante': 'Puntos'}),
-        ]
+    partidos.groupby('Equipo', as_index=False)
+    .agg(
+        Puntos=('Puntos', 'sum'),
+        PJ=('Puntos', 'size'),
     )
-    .groupby('Equipo', as_index=False)['Puntos']
-    .sum()
     .sort_values('Puntos', ascending=False)
 )
 
+# Se muestra la informacion de la tabla de posiciones
 print(f"\033[105m Tabla de posiciones:\033[0m\n{tabla_posiciones}")
 print(f"\033[104m Tipo de Dato de tabla_posiciones:\033[0m {type(tabla_posiciones)}")
+
+# Diccionario de colores de los equipos para 
+colores_equipos = {
+    "Peñarol": "#fdca01",                   #esta
+    "Nacional Montevideo": "#f80020",       #esta
+    "Defensor Sporting": "#450090",         #esta
+    "Boston River": "#1f5428",              #esta
+    "Progreso": "#de0204",
+    "Cerro Largo FC": "#2b29d2",            #esta
+    "Racing Montevideo": "#1c6823",         #esta
+    "Liverpool Montevideo": "#003399",      #esta
+    "Wanderers": "#1d120e",                 #esta
+    "CA Cerro": "#0193de",                  #esta
+    "Deportivo Maldonado": "#d00000",       #esta
+    "Rampla Juniors": "#009a3e",
+    "CA River Plate": "#c01b24",            #esta
+    "Danubio": "#171613",                   #esta
+    "Fenix": "#6e3178",                     #esta
+    "Miramar": "#e5060b",
+    "Montevideo City Torque": "#6caedf",    #esta
+    "La Luz": "#056136",                    #esta
+    "Plaza Colonia": "#00933d"              #esta
+}
+
+# Lista de colores a partir de el dict
+colores_barras = [colores_equipos[label] for label in tabla_posiciones['Equipo']]
+
+# Grafica
+plt.figure(figsize=(18,10))
+plt.bar(tabla_posiciones['Equipo'], tabla_posiciones['Puntos'], color=colores_barras, label=f"{tabla_posiciones['Equipo']} - {tabla_posiciones['PJ']}PJ")
+plt.legend()
+plt.savefig("Imagenes/Posiciones.jpg")

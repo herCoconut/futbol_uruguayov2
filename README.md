@@ -17,3 +17,8 @@ Contiene unicamente las tempordas que tienen datos, por lo que la informacion qu
 
 ### Archivo ```partidos_temporadas.py```
 Con varios parametros sobre los partidos disputados, desde quien era local y visitante hasta los goles de los locales y visitantes. Como <span style="color: red">negativo</span> esta el hecho de que es informacion incompleta, tienen informacion de las 2 primeras fechas.
+Se hace una grafica de barra para visualizar las posiciones de los equipos en la fecha 2, las imagenes se guardan en la carpeta Imagenes.
+
+
+## Carpetas creadas
+- Se crea la carpeta Imagenes para poner en ella, todas las graficas que vayan surgiendo del procesamiento de datos.
