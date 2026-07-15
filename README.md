@@ -8,7 +8,6 @@ Analisis del futbol uruguayo con la API de TheSportsDB.
 - ```temporadas.py```: Dice cuantas temporadas hay en la base de datos.
 - ```partidos_temporadas.py```: Muestra los partidos de la temporada 2023. NO ESTAN TODOS LOS PARTIDOS.
 
-
 ### Archivo ```api.py```
 Al ser una api publica y sin registro la API_KEY es conocida por todos (123), por este motivo no es necesario ocultarla. En caso de contar con la subscripcion paga de la api, si es necesario crear e; ```.env```.
 La identificacion que la api le da a la primera division de Uruguay es 4432.

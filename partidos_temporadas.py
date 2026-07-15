@@ -24,6 +24,12 @@ data = get_partidos_temporada(temporada="2023")
 # Se crea el dataframe a partir de data
 partidos = pd.json_normalize(data['events'])
 
-print(f"Cabezal del dataframe{partidos.head(10)}")
-print(f"Info del dataframe{partidos.info()}")
-print(f"Columnas del dataframe{partidos.columns}")
+# Muestra informacion sobre los partidos que se tiene de la temporada 2023.
+# print(f"Cabezal del dataframe{partidos.head(15)}")
+# print(f"Info del dataframe{partidos.info()}")
+# print(f"Columnas del dataframe{partidos.columns}")
+
+partidos_filter = partidos[['idEvent', 'intRound', 'dateEvent', 'strTime', 'strHomeTeam', 'strAwayTeam', 'intHomeScore', 'intAwayScore']]
+
+# Muestra informacion filtra (informacion relevante) sobre los partidos que se tiene de la temporada 2023.
+print(f"\033[105m Cabezal del dataframe filtrado:\033[0m\n{partidos_filter.head(15)}")
